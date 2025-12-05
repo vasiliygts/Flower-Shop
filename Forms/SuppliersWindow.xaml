@@ -1,0 +1,24 @@
+﻿<Window x:Class="FlowerShopApp.Forms.SuppliersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Постачальники" Height="500" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Content="➕ Додати" Width="100" Margin="0,0,10,0" Click="AddButton_Click"/>
+            <Button Content="✏️ Редагувати" Width="100" Margin="0,0,10,0" Click="EditButton_Click"/>
+            <Button Content="🗑 Видалити" Width="100" Click="DeleteButton_Click"/>
+        </StackPanel>
+
+        <DataGrid Name="SuppliersDataGrid"
+                  Grid.Row="1"
+                  AutoGenerateColumns="True"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  SelectionMode="Single"/>
+    </Grid>
+</Window>

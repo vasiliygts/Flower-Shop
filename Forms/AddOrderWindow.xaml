@@ -1,0 +1,69 @@
+﻿<Window x:Class="FlowerShopApp.Forms.AddOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="Додати замовлення" Height="600" Width="450" WindowStartupLocation="CenterOwner" Loaded="Window_Loaded">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Основні поля замовлення -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Клієнт:"/>
+            <ComboBox Name="CustomerComboBox" DisplayMemberPath="FullName" SelectedValuePath="CustomerId"/>
+
+            <TextBlock Text="Дата замовлення:" Margin="0,10,0,0"/>
+            <DatePicker Name="OrderDatePicker" SelectedDate="{x:Static sys:DateTime.Now}"/>
+
+            <TextBlock Text="Спосіб оплати:" Margin="0,10,0,0"/>
+            <TextBox Name="PaymentMethodTextBox"/>
+
+            <TextBlock Text="Адреса доставки:" Margin="0,10,0,0"/>
+            <TextBox Name="DeliveryAddressTextBox"/>
+
+            <TextBlock Text="Статус:" Margin="0,10,0,0"/>
+            <ComboBox Name="StatusComboBox">
+                <ComboBoxItem Content="нове" IsSelected="True"/>
+                <ComboBoxItem Content="у роботі"/>
+                <ComboBoxItem Content="виконано"/>
+                <ComboBoxItem Content="скасовано"/>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Блок товарів -->
+        <StackPanel Grid.Row="1" Margin="0,20,0,0">
+            <TextBlock Text="Товари у замовленні:" FontWeight="Bold" Margin="0,0,0,5"/>
+
+            <!-- Таблиця товарів -->
+            <DataGrid x:Name="OrderItemsDataGrid"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      IsReadOnly="True"
+                      Height="150">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Назва товару" Binding="{Binding ProductName}" Width="*"/>
+                    <DataGridTextColumn Header="Кількість" Binding="{Binding Quantity}" Width="80"/>
+                    <DataGridTextColumn Header="Ціна" Binding="{Binding PriceAtOrderTime}" Width="100"/>
+                    <DataGridTextColumn Header="Сума" Binding="{Binding Total}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Панель додавання товару -->
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <ComboBox x:Name="ProductComboBox" Width="200" DisplayMemberPath="Name" SelectedValuePath="ProductId"/>
+                <TextBox x:Name="QuantityTextBox" Width="60" Margin="10,0"/>
+                <Button Content="➕ Додати" Width="100" Click="AddProductToOrder_Click"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Кнопки знизу -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Зберегти" Width="100" Margin="0,10,10,0" Click="SaveButton_Click"/>
+            <Button Content="Скасувати" Width="100" Margin="0,10,0,0" Click="CancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

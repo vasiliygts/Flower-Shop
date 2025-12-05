@@ -1,0 +1,61 @@
+﻿<Window x:Class="FlowerShopApp.Forms.AddSupplyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="Нова поставка" Height="600" Width="550" WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Основна інформація -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Постачальник:"/>
+            <ComboBox x:Name="SupplierComboBox" Width="300" DisplayMemberPath="Name" SelectedValuePath="SupplierId"/>
+
+            <TextBlock Text="Дата поставки:" Margin="0,10,0,0"/>
+            <DatePicker x:Name="SupplyDatePicker" SelectedDate="{x:Static sys:DateTime.Now}"/>
+        </StackPanel>
+
+        <!-- Таблиця товарів у поставці -->
+        <StackPanel Grid.Row="1" Margin="0,20,0,0">
+            <TextBlock Text="Товари в поставці:" FontWeight="Bold" Margin="0,0,0,5"/>
+
+            <DataGrid x:Name="SupplyItemsDataGrid"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      IsReadOnly="True"
+                      Height="200">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Назва товару" Binding="{Binding ProductName}" Width="*"/>
+                    <DataGridTextColumn Header="Кількість" Binding="{Binding Quantity}" Width="80"/>
+                    <DataGridTextColumn Header="Ціна закупівлі" Binding="{Binding PurchasePrice}" Width="120"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- 🔽 Додано заголовок перед полями вводу -->
+            <TextBlock Text="Додати товар до поставки (оберіть товар, кількість і ціну):"
+                       FontWeight="Bold" FontSize="13" Margin="0,15,0,5"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                <ComboBox x:Name="ProductComboBox" Width="200" DisplayMemberPath="Name" SelectedValuePath="ProductId"/>
+                <TextBox x:Name="QuantityTextBox" Width="60" Margin="10,0">
+                    <TextBox.ToolTip>Кількість</TextBox.ToolTip>
+                </TextBox>
+                <TextBox x:Name="PriceTextBox" Width="80" Margin="10,0">
+                    <TextBox.ToolTip>Ціна закупівлі</TextBox.ToolTip>
+                </TextBox>
+                <Button Content="➕ Додати" Width="100" Margin="10,0,0,0" Click="AddProductToSupply_Click"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Кнопки -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Зберегти" Width="100" Margin="0,0,10,0" Click="SaveButton_Click"/>
+            <Button Content="Скасувати" Width="100" Click="CancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
